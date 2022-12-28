@@ -8,10 +8,22 @@ resource "azurerm_resource_group" "this" {
   location = "eastus"
 }
 
-module "storage_account" {
-  source                    = "../../modules/example"
-  name                      =  "sa${random_pet.this.id}"
-  resource_group_name       = azurerm_resource_group.this.name
-  location                  = azurerm_resource_group.this.location
-  enable_https_traffic_only = var.enable_https_traffic_only
+
+
+# module "storage_account" {
+#   source                    = "../../modules/example"
+#   name                      =  "sa${random_pet.this.id}"
+#   resource_group_name       = azurerm_resource_group.this.name
+#   location                  = azurerm_resource_group.this.location
+#   enable_https_traffic_only = var.enable_https_traffic_only
+# }
+
+
+module "vnet1" {
+  source = "../../modules/vnet"
+  rg_name = azurerm_resource_group.this.name
+  address_space = ["10.0.0.0/16"]
+  vnet_name = "test1"
+
+  
 }
